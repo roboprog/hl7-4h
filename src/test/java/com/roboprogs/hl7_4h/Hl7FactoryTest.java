@@ -10,6 +10,7 @@ import junit.framework.TestSuite;
 public
 class Hl7FactoryTest
         extends TestCase {
+
     /**
      * Create the test case
      *
@@ -28,12 +29,22 @@ class Hl7FactoryTest
         return new TestSuite( Hl7FactoryTest.class );
     }
 
-    /**
-     * Rigourous Test :-)
-     */
+    /** Minimal test of parsing a partial message. */
     public
-    void testApp() {
-        assertTrue( true );
+    void testMin() {
+        final String MIN_MSG_TEXT =
+"MSH|^~\r" +
+"EVN\r" +
+"PID\r" ;
+
+        Hl7Msg msg;
+
+        msg = Hl7Factory.createMessage( MIN_MSG_TEXT );
+        assertNotNull( "Message object should be returned", msg );
     }
 
 }
+
+
+// vi: ts=4 sw=4 expandtab
+// *** EOF ***
