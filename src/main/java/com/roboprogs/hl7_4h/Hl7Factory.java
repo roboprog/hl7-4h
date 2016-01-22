@@ -68,7 +68,13 @@ class Hl7Factory {
     /** create an HL7 message accessor from the given message text */
     public static
     Hl7Msg createMessage( String msgText ) {
-        return new Hl7Msg();  // TODO - actual parsing
+        ScriptObjectMirror msg;
+
+        synchronized ( Hl7Factory.engine ) {
+            msg = (ScriptObjectMirror) Hl7Factory.hl7_4h.callMember(
+                    "create_message", msgText );
+            return new Hl7Msg( msg );
+        }
     }
 
 }

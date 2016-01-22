@@ -4,7 +4,14 @@
  */
 var hl7_4h = (
     function () {
-        return {}  // TODO
+        return {
+
+            /** create an accessor object, given a well formed HL7 message text */
+            create_message: function ( msg_text ) {
+                return {}  // TODO
+            }
+
+        }
     }
 )()
 

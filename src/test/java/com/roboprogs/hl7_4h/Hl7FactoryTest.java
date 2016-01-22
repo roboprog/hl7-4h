@@ -1,5 +1,7 @@
 package com.roboprogs.hl7_4h;
 
+import jdk.nashorn.api.scripting.ScriptObjectMirror;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -10,6 +12,13 @@ import junit.framework.TestSuite;
 public
 class Hl7FactoryTest
         extends TestCase {
+
+    /** a very minimal (partial) message text */
+    private static final
+    String MIN_MSG_TEXT =
+"MSH|^~\r" +
+"EVN\r" +
+"PID\r" ;
 
     /**
      * Create the test case
@@ -32,15 +41,20 @@ class Hl7FactoryTest
     /** Minimal test of parsing a partial message. */
     public
     void testMin() {
-        final String MIN_MSG_TEXT =
-"MSH|^~\r" +
-"EVN\r" +
-"PID\r" ;
-
         Hl7Msg msg;
 
         msg = Hl7Factory.createMessage( MIN_MSG_TEXT );
         assertNotNull( "Message object should be returned", msg );
+    }
+
+    /** Minimal test that the underlying JS implementation object was made/attached */
+    public
+    void testJsPresent() {
+        ScriptObjectMirror jsObj;
+
+        jsObj = Hl7Factory.createMessage( MIN_MSG_TEXT ).getRawImpl();
+        assertNotNull( "Message implementation scripting object should be returned",
+                jsObj );
     }
 
 }
