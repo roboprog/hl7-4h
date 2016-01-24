@@ -7,10 +7,10 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * Unit test for simple App.
+ * Unit test HL7 Messages library.
  */
 public
-class Hl7FactoryTest
+class Hl7MsgTest
         extends TestCase {
 
     /** a very minimal (partial) message text */
@@ -25,8 +25,7 @@ class Hl7FactoryTest
      *
      * @param testName name of the test case
      */
-    public
-    Hl7FactoryTest( String testName ) {
+    public Hl7MsgTest( String testName ) {
         super( testName );
     }
 
@@ -35,7 +34,7 @@ class Hl7FactoryTest
      */
     public static
     Test suite() {
-        return new TestSuite( Hl7FactoryTest.class );
+        return new TestSuite( Hl7MsgTest.class );
     }
 
     /** Minimal test of parsing a partial message. */

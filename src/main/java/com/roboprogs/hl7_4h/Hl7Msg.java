@@ -15,7 +15,7 @@ class Hl7Msg {
     /** init */
     public
     Hl7Msg( String msg ) {
-        this.msg = Hl7Factory.createMessage( msg );
+        this.msg = Hl7Utils.createMessage( msg );
     }
 
     /** return internal (js) representation of message */

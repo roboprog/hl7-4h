@@ -11,7 +11,7 @@ import jdk.nashorn.api.scripting.ScriptObjectMirror;
  * Java wrapper around HL7-4H Javascript library.
  */
 public
-class Hl7Factory {
+class Hl7Utils {
 
     /** JS interpreter, loaded with any needed scripting (sync on this - not thread safe) */
     public static final
@@ -46,7 +46,7 @@ class Hl7Factory {
         Reader in;
 
         in = new BufferedReader( new InputStreamReader(
-                Hl7Factory.class.getResourceAsStream( fname ) ) );
+                Hl7Utils.class.getResourceAsStream( fname ) ) );
         try {
             engine.eval( in );
         } finally {
@@ -58,7 +58,7 @@ class Hl7Factory {
     private static
     ScriptObjectMirror getJsModuleInstance() {
         try {
-            return (ScriptObjectMirror) Hl7Factory.engine.eval( "hl7_4h" );
+            return (ScriptObjectMirror) Hl7Utils.engine.eval( "hl7_4h" );
         } catch ( Throwable e ) {
             throw new RuntimeException(
                     "Failed to initialize js module reference: " + e, e );
@@ -68,8 +68,8 @@ class Hl7Factory {
     /** create an HL7 message script implementation from the given message text */
     static  // package
     ScriptObjectMirror createMessage( String msgText ) {
-        synchronized ( Hl7Factory.engine ) {
-            return (ScriptObjectMirror) Hl7Factory.hl7_4h.callMember(
+        synchronized ( Hl7Utils.engine ) {
+            return (ScriptObjectMirror) Hl7Utils.hl7_4h.callMember(
                     "create_message", msgText );
         }
     }
