@@ -1,6 +1,7 @@
 package com.roboprogs.hl7_4h;
 
 import java.io.*;
+import java.util.*;
 
 import javax.script.ScriptEngineManager;
 
@@ -72,6 +73,23 @@ class Hl7Utils {
             return (ScriptObjectMirror) Hl7Utils.hl7_4h.callMember(
                     "create_message", msgText );
         }
+    }
+
+    /** convert Javascript array to Java List of given type */
+    public static
+    <T> List <T> jsArrayToList(
+            Class <T> type,
+            ScriptObjectMirror array ) {
+        List <T> ret;
+        long len;
+        long idx;
+
+        ret = new ArrayList <> ();
+        len = (Long) array.get( "length" );
+        for ( idx = 0 ; idx < len ; idx ++ ) {
+            ret.add( (T) array.get( idx ) );
+        }
+        return ret;
     }
 
 }

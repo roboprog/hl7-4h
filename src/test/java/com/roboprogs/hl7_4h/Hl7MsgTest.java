@@ -1,5 +1,7 @@
 package com.roboprogs.hl7_4h;
 
+import java.util.*;
+
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
 
 import junit.framework.Test;
@@ -19,6 +21,16 @@ class Hl7MsgTest
 "MSH|^~\r" +
 "EVN\r" +
 "PID\r" ;
+
+    /** segments from minimal message above */
+    private static final
+    Set <String> MIN_MSG_SEGS = new HashSet <> ();
+    static
+    {
+        MIN_MSG_SEGS.add( "MSH" );
+        MIN_MSG_SEGS.add( "EVN" );
+        MIN_MSG_SEGS.add( "PID" );
+    }
 
     /**
      * Create the test case
@@ -51,7 +63,7 @@ class Hl7MsgTest
     void testJsPresent() {
         ScriptObjectMirror jsObj;
 
-        jsObj = ( new Hl7Msg( MIN_MSG_TEXT ) ).getRawImpl();
+        jsObj = getJsMsg( MIN_MSG_TEXT );
         assertNotNull( "Message implementation scripting object should be returned",
                 jsObj );
     }
@@ -65,6 +77,25 @@ class Hl7MsgTest
         // note that use of \r return chars cause overwrites on console
         assertEquals( "Original message text should be returned",
                 MIN_MSG_TEXT, msg.toString() );
+    }
+
+    /** verify that the segment codes in our min sample are found */
+    public
+    void testSegmentCodes() {
+        ScriptObjectMirror rawCodes;
+        Set <String> codes;
+
+        rawCodes = (ScriptObjectMirror)
+                getJsMsg( MIN_MSG_TEXT ).callMember( "get_segment_codes" );
+        codes = new HashSet <> ( Hl7Utils.jsArrayToList( String.class, rawCodes ) );
+        assertEquals( "Segment codes should be returned from sample message",
+                MIN_MSG_SEGS, codes );
+    }
+
+    /** return JS implementation for given message text */
+    private
+    ScriptObjectMirror getJsMsg( String msg ) {
+        return ( new Hl7Msg( msg ) ).getRawImpl();
     }
 
 }
