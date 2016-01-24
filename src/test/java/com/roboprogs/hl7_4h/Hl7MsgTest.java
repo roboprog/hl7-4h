@@ -58,17 +58,7 @@ class Hl7MsgTest
         Hl7Msg msg;
 
         msg = new Hl7Msg( MIN_MSG_TEXT );
-        assertNotNull( "Message object should be returned", msg );
-    }
-
-    /** Minimal test that the underlying JS implementation object was made/attached */
-    public
-    void testJsPresent() {
-        ScriptObjectMirror jsMsg;
-
-        jsMsg = getJsMsg( MIN_MSG_TEXT );
-        assertNotNull( "Message implementation scripting object should be returned",
-                jsMsg );
+        assertNotNull( "Message object should be created", msg );
     }
 
     /** verify that an unmodified message retains its content */
@@ -80,6 +70,16 @@ class Hl7MsgTest
         // note that use of \r return chars cause overwrites on console
         assertEquals( "Original message text should be returned",
                 MIN_MSG_TEXT, msg.toString() );
+    }
+
+    /** Minimal test that the underlying JS implementation object was made/attached */
+    public
+    void testJsPresent() {
+        ScriptObjectMirror jsMsg;
+
+        jsMsg = getJsMsg( MIN_MSG_TEXT );
+        assertNotNull( "Message implementation scripting object should be returned",
+                jsMsg );
     }
 
     /** verify that the segment codes in our min sample are found */
