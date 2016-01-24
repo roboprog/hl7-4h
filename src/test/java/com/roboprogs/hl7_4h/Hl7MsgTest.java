@@ -20,7 +20,9 @@ class Hl7MsgTest
     String MIN_MSG_TEXT =
 "MSH|^~\r" +
 "EVN\r" +
-"PID\r" ;
+"PID\r" +
+"OBX\r" +
+"OBX\r" ;
 
     /** segments from minimal message above */
     private static final
@@ -30,6 +32,7 @@ class Hl7MsgTest
         MIN_MSG_SEGS.add( "MSH" );
         MIN_MSG_SEGS.add( "EVN" );
         MIN_MSG_SEGS.add( "PID" );
+        MIN_MSG_SEGS.add( "OBX" );
     }
 
     /**
@@ -61,11 +64,11 @@ class Hl7MsgTest
     /** Minimal test that the underlying JS implementation object was made/attached */
     public
     void testJsPresent() {
-        ScriptObjectMirror jsObj;
+        ScriptObjectMirror jsMsg;
 
-        jsObj = getJsMsg( MIN_MSG_TEXT );
+        jsMsg = getJsMsg( MIN_MSG_TEXT );
         assertNotNull( "Message implementation scripting object should be returned",
-                jsObj );
+                jsMsg );
     }
 
     /** verify that an unmodified message retains its content */
@@ -90,6 +93,24 @@ class Hl7MsgTest
         codes = new HashSet <> ( Hl7Utils.jsArrayToList( String.class, rawCodes ) );
         assertEquals( "Segment codes should be returned from sample message",
                 MIN_MSG_SEGS, codes );
+    }
+
+    /** verify that we can access segments */
+    public
+    void testSegmentAccess() {
+        ScriptObjectMirror jsMsg;
+
+        jsMsg = getJsMsg( MIN_MSG_TEXT );
+        assertNotNull( "MSH should have 1 segment",
+                jsMsg.callMember( "get", "MSH", 1 ) );
+        assertNull( "MSH should not be repeated",
+                jsMsg.callMember( "get", "MSH", 2 ) );
+        assertNotNull( "PID should have 1 segment",
+                jsMsg.callMember( "get", "PID", 1 ) );
+        assertNotNull( "OBX should have a 2nd segment",
+                jsMsg.callMember( "get", "OBX", 2 ) );
+        assertNull( "ZZZ should not exist",
+                jsMsg.callMember( "get", "ZZZ", 1 ) );
     }
 
     /** return JS implementation for given message text */

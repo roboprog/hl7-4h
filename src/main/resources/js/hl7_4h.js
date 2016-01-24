@@ -5,6 +5,11 @@
 var hl7_4h = (
     function () {
 
+        /** sanitize undefined (or otherwise falsey) values to null for the sake of Java callers */
+        var un2null = function ( val ) {
+            return val ? val : null
+        }
+
         /** parse the segment text, update and return map of segments */
         var parse_segment = function (seg, seg_map ) {
             var seg_flds, seg_code, seg_list
@@ -40,7 +45,16 @@ var hl7_4h = (
                     to_string: function () { return msg_text },  // TODO: mutable messages
 
                     /** return the message segment codes */
-                    get_segment_codes: function() { return msg_seg_codes },
+                    get_segment_codes: function () { return msg_seg_codes },
+
+                    /** return the indicated segment, if it exists */
+                    get: function ( seg_code, n1 ) {
+                        var seg_list
+
+                        seg_list = seg_map[ seg_code ]
+                        return un2null( seg_list ?
+                                seg_list[ n1 - 1 ] : null )
+                    }
 
                 }
             }
