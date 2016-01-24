@@ -72,6 +72,13 @@ class Hl7MsgTest
                 MIN_MSG_TEXT, msg.toString() );
     }
 
+    // TODO: path access to field / repeating field level
+    // e.g. - MSH-1, MSH-2, OBX.2-1, PID-2.3
+
+    // TODO: path access to component level
+
+    // TODO: path access to subcomponent level
+
     /** Minimal test that the underlying JS implementation object was made/attached */
     public
     void testJsPresent() {
