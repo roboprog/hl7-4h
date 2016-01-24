@@ -8,7 +8,12 @@ var hl7_4h = (
 
             /** create an accessor object, given a well formed HL7 message text */
             create_message: function ( msg_text ) {
-                return {}  // TODO
+
+                return {
+
+                    /** return the HL7 message text "deserialized */
+                    to_string: function () { return msg_text }  // TODO: mutable messages
+                }
             }
 
         }

@@ -56,6 +56,17 @@ class Hl7MsgTest
                 jsObj );
     }
 
+    /** verify that an unmodified message retains its content */
+    public
+    void testMsgIdentity() {
+        Hl7Msg msg;
+
+        msg = new Hl7Msg( MIN_MSG_TEXT );
+        // note that use of \r return chars cause overwrites on console
+        assertEquals( "Original message text should be returned",
+                MIN_MSG_TEXT, msg.toString() );
+    }
+
 }
 
 

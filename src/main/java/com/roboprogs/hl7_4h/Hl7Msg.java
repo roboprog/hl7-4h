@@ -18,6 +18,15 @@ class Hl7Msg {
         this.msg = Hl7Utils.createMessage( msg );
     }
 
+    /**
+     * Re-serialize the message text.
+     * Beware of how \r return characters display on most systems!
+     */
+    public
+    String toString() {
+        return (String) this.msg.callMember( "to_string" );
+    }
+
     /** return internal (js) representation of message */
     final public
     ScriptObjectMirror getRawImpl() {
