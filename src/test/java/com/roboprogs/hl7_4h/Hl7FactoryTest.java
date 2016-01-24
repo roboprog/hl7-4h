@@ -43,7 +43,7 @@ class Hl7FactoryTest
     void testMin() {
         Hl7Msg msg;
 
-        msg = Hl7Factory.createMessage( MIN_MSG_TEXT );
+        msg = new Hl7Msg( MIN_MSG_TEXT );
         assertNotNull( "Message object should be returned", msg );
     }
 
@@ -52,7 +52,7 @@ class Hl7FactoryTest
     void testJsPresent() {
         ScriptObjectMirror jsObj;
 
-        jsObj = Hl7Factory.createMessage( MIN_MSG_TEXT ).getRawImpl();
+        jsObj = ( new Hl7Msg( MIN_MSG_TEXT ) ).getRawImpl();
         assertNotNull( "Message implementation scripting object should be returned",
                 jsObj );
     }

@@ -14,13 +14,12 @@ class Hl7Msg {
 
     /** init */
     public
-    Hl7Msg( ScriptObjectMirror msg ) {
-        this.msg = msg;
+    Hl7Msg( String msg ) {
+        this.msg = Hl7Factory.createMessage( msg );
     }
 
     /** return internal (js) representation of message */
-    final
-    public
+    final public
     ScriptObjectMirror getRawImpl() {
         return this.msg;
     }
